@@ -20,11 +20,10 @@
     	"vendor-dir": "Vendor/"
 	},
 	"require": {
-		"php": ">=5.2.0",
+		"php": ">=7.3",
 		"ext-gd": "*",
 		"ext-zip": "*",
 		"ext-xml": "*",
-		"composer/installers": "~1.0",
-		"phpoffice/phpexcel": "~1.8.0"
+		"phpoffice/phpspreadsheet": "^1.24"
 	}
 }

@@ -61,11 +61,7 @@ class ExcelView extends View {
 		);
 
 		$this->ext = $controller->request->params['ext'];
-		$this->format = ($this->ext == 'xlsx')? 'Excel2007': 'Excel5';
-
-		if (!class_exists('PHPExcel_IOFactory')) {
-			App::import('Vendor', 'IOFactory', array('file' => 'phpoffice' . DS . 'phpexcel' . DS . 'Classes' . DS . 'PHPExcel' . DS . 'IOFactory.php'));
-		}
+		$this->format = ($this->ext == 'xlsx')? 'Xlsx': 'Xls';
 
 		parent::__construct($controller);
 	}
@@ -82,7 +78,7 @@ class ExcelView extends View {
 		$content = parent::render($view, $layout);
 
 		$file = $this->createTempFile($content);
-		$reader = PHPExcel_IOFactory::createReader('HTML');
+		$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Html');
 
 		$excel = $reader->load($file);
 		$this->deleteTempFile($file);
@@ -90,7 +86,7 @@ class ExcelView extends View {
 		$props = $excel->getProperties();
 		$props->setCreator($this->excelConfig['creator']);
 		
-		$writer = PHPExcel_IOFactory::createWriter($excel, $this->format);
+		$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($excel, $this->format);
 		ob_start();
 		$writer->save('php://output');
 		$excelOutput = ob_get_clean();
